@@ -11,27 +11,19 @@
 # This code outputs the two alelles when the gene is heterozygous, and just one alelle when it is homozygous. In the 
 # latter case, the option used calls all the alternative nucleotide when a snp is found.
 
-# The code not yet makes any filtering of the vcf variants, therefore the vcf data used should be previously filtered
-# in order to get biologically relevant data. Working on implementing the filters.
-
 # Usage:
 
-# ./thisprogram.sh gtf_file_location.gtf ref_genome_location.fa vcf_file.vcf sample_name output_absolute_dir Species_name
+# ./thisprogram.sh file.gtf refgen.fa file.vcf "sample_name" /output/absolute/dir "Species_name"
 
 # Three files are going to be written to the directory you give as the fifth argument in the "Usage". Two fasta files,
 # one with the protein sequence of the input genes, and one with the correspondent DNA sequence. The third file is an intermediate
 # tsv extension file with the CDS's retreived from the GTF file.
 
-# IMPORTANT: The version of this program as of the 3th dec 2021 (RFZ_local_get_private_cds.sh) expects the name
-# of the species whith the one you are working as a sixth argument in the initial command. This name will be appended
-# to the fasta headers in the ouput.
-
-# In order to translate proteins, the correspondent RFZ_local_combine_cds_to_prot.py file must be in the folder where
+# In order to translate proteins, the correspondent Combine_CDS_concatenator.py file must be in the folder where
 # you are running this bash program.
 
 
-# As stated in the usage, the fifth is the output directory. It is very important for it to be an absolute path, or a path
-# that is contained in your current working directory.
+# The fifth argument of the command should be an absolute path, or a path that is contained in your current working directory.
 
 ###################################################################################################################
 ###################################################################################################################
@@ -200,4 +192,5 @@ echo combining exons of provided gtf, genes translated are: $gene_ids > /dev/std
 
 python3 Combine_CDS_concatenator.py ${base_output}/$id.private_exon_sequences.tsv $id $species
 
+# removing temporary files
 rm tmp.snp.vcf.gz* tmp.indel.vcf.gz*
